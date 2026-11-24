@@ -1,0 +1,223 @@
+id: "higdon_nov_mara2_pt"
+name: "Hal Higdon: Novice 2 (Principiante 2)"
+description: "Hal Higdon: Novice 2 (Principiante 2): \"O Novice 2 foi pensado para ficar entre os planos de maratona Novice 1 e Intermediate 1. Destina-se a corredores que já podem ter terminado a primeira maratona e querem acrescentar um pouco mais de quilometragem na preparação da segunda ou terceira, com o objetivo de melhorar os tempos ou até de se qualificar para a Maratona de Boston.\" (mais detalhes na ligação abaixo)"
+units: "km"
+source: "https://www.halhigdon.com/training-programs/marathon-training/novice-2-marathon/"
+type: "Marathon"
+schedule:
+  - workouts: # Semana 1
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "8,1 km a ritmo de maratona"
+        distance: 8.1
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "12,9 km corrida longa"
+        distance: 12.9
+      - title: "Treino cruzado"
+  - workouts: # Semana 2
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "14,5 km corrida longa"
+        distance: 14.5
+      - title: "Treino cruzado"
+  - workouts: # Semana 3
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "8,1 km a ritmo de maratona"
+        distance: 8.1
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "9,7 km corrida longa"
+        distance: 9.7
+      - title: "Treino cruzado"
+  - workouts: # Semana 4
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "9,7 km a ritmo de maratona"
+        distance: 9.7
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "17,7 km corrida longa"
+        distance: 17.7
+      - title: "Treino cruzado"
+  - workouts: # Semana 5
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "9,7 km corrida leve"
+        distance: 9.7
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "19,3 km corrida longa"
+        distance: 19.3
+      - title: "Treino cruzado"
+  - workouts: # Semana 6
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "9,7 km a ritmo de maratona"
+        distance: 9.7
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "14,5 km corrida longa"
+        distance: 14.5
+      - title: "Treino cruzado"
+  - workouts: # Semana 7
+      - title: "Descanso"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "11,3 km a ritmo de maratona"
+        distance: 11.3
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "Descanso"
+      - title: "22,5 km corrida longa"
+        distance: 22.5
+      - title: "Treino cruzado"
+  - workouts: # Semana 8
+      - title: "Descanso"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "11,3 km corrida leve"
+        distance: 11.3
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "Descanso"
+      - title: "24,1 km corrida longa"
+        distance: 24.1
+      - title: "Treino cruzado"
+  - workouts: # Semana 9
+      - title: "Descanso"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "11,3 km a ritmo de maratona"
+        distance: 11.3
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "Descanso"
+      - title: "Descanso"
+      - title: "Meia Maratona (21,1 km)"
+        distance: 21.1
+  - workouts: # Semana 10
+      - title: "Descanso"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "12,9 km a ritmo de maratona"
+        distance: 12.9
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "Descanso"
+      - title: "27,4 km corrida longa"
+        distance: 27.4
+      - title: "Treino cruzado"
+  - workouts: # Semana 11
+      - title: "Descanso"
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "12,9 km corrida leve"
+        distance: 12.9
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "Descanso"
+      - title: "29 km corrida longa"
+        distance: 29.0
+      - title: "Treino cruzado"
+  - workouts: # Semana 12
+      - title: "Descanso"
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "12,9 km a ritmo de maratona"
+        distance: 12.9
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "Descanso"
+      - title: "21 km corrida longa"
+        distance: 21.0
+      - title: "Treino cruzado"
+  - workouts: # Semana 13
+      - title: "Descanso"
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "8,1 km a ritmo de maratona"
+        distance: 8.1
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "Descanso"
+      - title: "30,6 km corrida longa"
+        distance: 30.6
+      - title: "Treino cruzado"
+  - workouts: # Semana 14
+      - title: "Descanso"
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "12,9 km corrida leve"
+        distance: 12.9
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "Descanso"
+      - title: "19,3 km corrida longa"
+        distance: 19.3
+      - title: "Treino cruzado"
+  - workouts: # Semana 15
+      - title: "Descanso"
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "8,1 km a ritmo de maratona"
+        distance: 8.1
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "Descanso"
+      - title: "32,2 km corrida longa"
+        distance: 32.2
+      - title: "Treino cruzado"
+  - workouts: # Semana 16
+      - title: "Descanso"
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "6,4 km a ritmo de maratona"
+        distance: 6.4
+      - title: "8,1 km corrida leve"
+        distance: 8.1
+      - title: "Descanso"
+      - title: "19,3 km corrida longa"
+        distance: 19.3
+      - title: "Treino cruzado"
+  - workouts: # Semana 17
+      - title: "Descanso"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "Descanso"
+      - title: "12,9 km corrida longa"
+        distance: 12.9
+      - title: "Treino cruzado"
+  - workouts: # Semana 18
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "3,2 km corrida leve"
+        distance: 3.2
+      - title: "Descanso"
+      - title: "Descanso"
+      - title: "3,2 km corrida leve"
+        distance: 3.2
+      - title: "Maratona (42,2 km)"
+        distance: 42.2

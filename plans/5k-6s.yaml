@@ -1,0 +1,60 @@
+id: 5k-6s
+name: "5 km — 6 Semanas (Iniciante / Ritmo)"
+distance_label: "5 km"
+weeks_count: 6
+description: "Plano progressivo de 6 semanas para preparar uma prova rápida de 5 km ou ganhar velocidade base."
+weeks:
+  - week: 1
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "Recuperação ou mobilidade ligeira." }
+      - { type: easy, title: "Corrida Leve", distance_km: 4, notes: "Ritmo confortável de conversa." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "Alongamentos ou caminhada leve." }
+      - { type: intervals, title: "Séries Curtas", distance_km: 5, notes: "1,5 km aquecimento + 6x400m ritmo 5k (90s pausa) + 1 km retorno à calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Suave", distance_km: 4, notes: "Manter cadência alta e passada solta." }
+      - { type: long, title: "Corrida Contínua", distance_km: 6, notes: "Ritmo aeróbio controlado." }
+  - week: 2
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "Ritmo confortável." }
+      - { type: cross, title: "Reforço Muscular", distance_km: 0, notes: "30 min de core e estabilidade de tornozelo/anca." }
+      - { type: tempo, title: "Ritmo Controlado", distance_km: 6, notes: "1,5 km aquecimento + 3 km em ritmo vivo + 1,5 km retorno à calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 4, notes: "Inclui 4 acelerações de 80m no final." }
+      - { type: long, title: "Corrida Longa Base", distance_km: 7, notes: "Ritmo fácil." }
+  - week: 3
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "Ritmo confortável." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: intervals, title: "Séries de 800m", distance_km: 6.5, notes: "1,5 km aquecimento + 4x800m ritmo objetivo (2 min pausa) + 1,5 km calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Regenerativa", distance_km: 4, notes: "Bem devagar para recuperar." }
+      - { type: long, title: "Corrida Longa", distance_km: 8, notes: "Maior volume da fase de construção." }
+  - week: 4
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "Ritmo solto." }
+      - { type: cross, title: "Mobilidade / Core", distance_km: 0, notes: "25 min trabalho técnico." }
+      - { type: intervals, title: "Fartlek 5k", distance_km: 6, notes: "1,5 km aquecimento + 10x (1 min forte / 1 min leve) + 1,5 km calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 4, notes: "" }
+      - { type: long, title: "Corrida Aeróbia", distance_km: 7, notes: "Semana de consolidação." }
+  - week: 5
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "" }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: intervals, title: "Séries Específicas", distance_km: 6, notes: "1,5 km aquecimento + 3x1000m ritmo de prova + 1,5 km retorno à calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Solta", distance_km: 4, notes: "4 retas progressivas." }
+      - { type: long, title: "Corrida Média", distance_km: 6, notes: "Início da redução de carga (taper)." }
+  - week: 6
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "Semana da prova." }
+      - { type: tempo, title: "Ativação", distance_km: 4.5, notes: "2 km leve + 1,5 km ritmo de prova + 1 km leve." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "Hidratação e sono." }
+      - { type: easy, title: "Trote Ligeiro", distance_km: 3, notes: "Pernas leves, sem fadiga." }
+      - { type: rest, title: "Descanso Total", distance_km: 0, notes: "Preparar dorsal e equipamento." }
+      - { type: easy, title: "Shakeout Run", distance_km: 2, notes: "15 min muito suaves + 2 acelerações curtas." }
+      - { type: race, title: "PROVA 5 KM", distance_km: 5, notes: "Aquecimento de 10-15 min antes da partida. Boa prova!" }

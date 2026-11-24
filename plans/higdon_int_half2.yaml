@@ -1,0 +1,147 @@
+id: "higdon_int_half2_pt"
+name: "Hal Higdon: Meia Maratona Intermediate 2 (Intermédio 2)"
+description: "Hal Higdon: Meia Maratona Intermediate 2 (Intermédio 2): \"A principal diferença entre o Intermediate 1 e o Intermediate 2 é que este programa inclui um dia de treino de velocidade. Os dois existem em paralelo, como a Terra 1 e a Terra 2 da banda desenhada. As segundas-feiras são de treino cruzado, a começar nos 30 minutos e a chegar à hora na semana 11, uma semana antes da meia maratona. As terças e quintas são dias leves, de 5 a 8 km (3 a 5 milhas). Entre elas, à quarta-feira, faz-se trabalho de velocidade, alternando corridas em ritmo de limiar com treino intervalado em pista. A sexta-feira é de descanso, seguida de corridas a ritmo de prova ao sábado e de corridas longas ao domingo, que começam nos 8 km (5 milhas) e chegam aos 19 km (12 milhas) uma semana antes da meia maratona. Este plano, sem dúvida, é para corredores experientes: pessoas que deixaram para trás as origens de principiante e querem melhorar o desempenho.\" (mais detalhes na ligação abaixo)"
+units: "km"
+source: "https://www.halhigdon.com/training-programs/half-marathon-training/intermediate-2-half-marathon/"
+type: "Half Marathon"
+schedule:
+  - workouts: # Semana 1
+      - title: "30 min treino cruzado"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "5 x 400 m a ritmo de 5 km"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "8 km corrida longa"
+        distance: 8.0
+  - workouts: # Semana 2
+      - title: "30 min treino cruzado"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "30 min em ritmo de limiar (tempo)"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "4,8 km a ritmo de prova"
+        distance: 4.8
+      - title: "9,7 km corrida longa"
+        distance: 9.7
+  - workouts: # Semana 3
+      - title: "40 min treino cruzado"
+      - title: "5,6 km corrida leve"
+        distance: 5.6
+      - title: "6 x 400 m a ritmo de 5 km"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "Descanso"
+      - title: "Prova de 5 km"
+        distance: 5.0
+  - workouts: # Semana 4
+      - title: "40 min treino cruzado"
+      - title: "5,6 km corrida leve"
+        distance: 5.6
+      - title: "35 min em ritmo de limiar (tempo)"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "11,3 km corrida longa"
+        distance: 11.3
+  - workouts: # Semana 5
+      - title: "40 min treino cruzado"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "7 x 400 m a ritmo de 5 km"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "4,8 km a ritmo de prova"
+        distance: 4.8
+      - title: "12,9 km corrida longa"
+        distance: 12.9
+  - workouts: # Semana 6
+      - title: "50 min treino cruzado"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "40 min em ritmo de limiar (tempo)"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso ou corrida leve"
+      - title: "Descanso"
+      - title: "Prova de 10 km"
+        distance: 10.0
+  - workouts: # Semana 7
+      - title: "Descanso"
+      - title: "7,2 km corrida leve"
+        distance: 7.2
+      - title: "8 x 400 m a ritmo de 5 km"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "6,4 km a ritmo de prova"
+        distance: 6.4
+      - title: "14,5 km corrida longa"
+        distance: 14.5
+  - workouts: # Semana 8
+      - title: "50 min treino cruzado"
+      - title: "7,2 km corrida leve"
+        distance: 7.2
+      - title: "40 min em ritmo de limiar (tempo)"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "8 km a ritmo de prova"
+        distance: 8.0
+      - title: "16,1 km corrida longa"
+        distance: 16.1
+  - workouts: # Semana 9
+      - title: "60 min treino cruzado"
+      - title: "8 km corrida leve"
+        distance: 8.0
+      - title: "9 x 400 m a ritmo de 5 km"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso ou corrida leve"
+      - title: "Descanso"
+      - title: "Prova de 15 km"
+        distance: 15.0
+  - workouts: # Semana 10
+      - title: "Descanso"
+      - title: "8 km corrida leve"
+        distance: 8.0
+      - title: "45 min em ritmo de limiar (tempo)"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "8 km a ritmo de prova"
+        distance: 8.0
+      - title: "17,7 km corrida longa"
+        distance: 17.7
+  - workouts: # Semana 11
+      - title: "60 min treino cruzado"
+      - title: "8 km corrida leve"
+        distance: 8.0
+      - title: "10 x 400 m a ritmo de 5 km"
+      - title: "4,8 km corrida leve"
+        distance: 4.8
+      - title: "Descanso"
+      - title: "4,8 km a ritmo de prova"
+        distance: 4.8
+      - title: "19,3 km corrida longa"
+        distance: 19.3
+  - workouts: # Semana 12
+      - title: "Descanso"
+      - title: "6,4 km corrida leve"
+        distance: 6.4
+      - title: "30 min em ritmo de limiar (tempo)"
+      - title: "3,2 km corrida leve"
+        distance: 3.2
+      - title: "Descanso"
+      - title: "Descanso"
+      - title: "Meia Maratona (21,1 km)"
+        distance: 21.1

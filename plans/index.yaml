@@ -1,0 +1,13 @@
+plans:
+  - id: 5k-6s
+    file: 5k-6s.yaml
+    name: "5 km — 6 Semanas (Iniciante / Ritmo)"
+  - id: marat_adv
+    file: boston_level_two.yaml
+    name: "Maratona Avançado"
+  - id: meia-maratona-int
+    file: higdon_int_half2.yaml
+    name: "Meia Maratona Intermédio"
+  - id: maratona-ini
+    file: higdon_nov_mara2.yaml
+    name: "Maratona — Iniciante"

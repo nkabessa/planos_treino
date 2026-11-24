@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="pt-PT">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Calendar Hack PT — Planos de Treino para Corrida</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/js-yaml@4.1.0/dist/js-yaml.min.js"></script>
+  <style>
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+    .drag-over { outline: 2px dashed #ca8a04; background-color: #fefce8 !important; }
+    [draggable="true"] { cursor: grab; }
+    [draggable="true"]:active { cursor: grabbing; }
+  </style>
+</head>
+<body class="bg-stone-100 text-stone-900 min-h-screen flex flex-col">
+
+  <!-- Barra Superior -->
+  <header class="bg-stone-950 text-white border-b-4 border-yellow-400 sticky top-0 z-30 shadow-md">
+    <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+      <div class="flex items-center gap-3">
+        <div class="bg-yellow-400 text-stone-950 font-black px-2.5 py-1 rounded text-lg tracking-tight">
+          CALENDAR HACK <span class="text-xs font-extrabold uppercase bg-stone-950 text-yellow-400 px-1.5 py-0.5 rounded ml-1">PT</span>
+        </div>
+        <span class="hidden sm:inline text-stone-300 text-sm">Planos de treino de corrida para o teu calendário</span>
+      </div>
+
+      <nav class="flex items-center gap-2">
+        <button id="nav-calendar" onclick="switchTab('calendar')" class="px-3.5 py-1.5 rounded text-sm font-bold bg-yellow-400 text-stone-950 transition">
+          Calendário
+        </button>
+        <button id="nav-about" onclick="switchTab('about')" class="px-3.5 py-1.5 rounded text-sm font-semibold text-stone-300 hover:text-white hover:bg-stone-800 transition">
+          Sobre
+        </button>
+      </nav>
+    </div>
+  </header>
+
+  <!-- VISTA: CALENDÁRIO -->
+  <main id="view-calendar" class="flex-1 max-w-7xl w-full mx-auto px-4 py-6 space-y-6">
+
+    <!-- Painel de Controlo -->
+    <section class="bg-white rounded-xl shadow-sm border border-stone-200 p-4 sm:p-5 space-y-4">
+      <div class="grid grid-cols-1 md:grid-cols-12 gap-4 items-end">
+        <!-- Seletor de Plano -->
+        <div class="md:col-span-5">
+          <label for="plan-select" class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">
+            Plano de Treino
+          </label>
+          <select id="plan-select" onchange="onSelectPlan(this.value)" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2.5 text-sm font-semibold text-stone-900 focus:border-yellow-500 focus:outline-none">
+            <option>A carregar planos...</option>
+          </select>
+        </div>
+
+        <!-- Data da Prova -->
+        <div class="md:col-span-3">
+          <label for="race-date" class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">
+            Data da Prova
+          </label>
+          <input type="date" id="race-date" onchange="onChangeRaceDate(this.value)" class="w-full rounded-lg border border-stone-300 bg-stone-50 px-3 py-2 text-sm font-semibold text-stone-900 focus:border-yellow-500 focus:outline-none" />
+        </div>
+
+        <!-- Unidades & Início da Semana -->
+        <div class="md:col-span-4 flex flex-wrap gap-3">
+          <div>
+            <span class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Unidade</span>
+            <div class="inline-flex rounded-lg border border-stone-300 overflow-hidden bg-stone-50">
+              <button id="unit-km" onclick="setUnit('km')" class="px-3 py-2 text-xs font-bold bg-stone-900 text-yellow-400">km</button>
+              <button id="unit-mi" onclick="setUnit('mi')" class="px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200">mi</button>
+            </div>
+          </div>
+
+          <div>
+            <span class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Início da Semana</span>
+            <div class="inline-flex rounded-lg border border-stone-300 overflow-hidden bg-stone-50">
+              <button id="start-mon" onclick="setWeekStart('mon')" class="px-3 py-2 text-xs font-bold bg-stone-900 text-yellow-400">Segunda</button>
+              <button id="start-sun" onclick="setWeekStart('sun')" class="px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200">Domingo</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Barra de Informação do Plano + Exportação -->
+      <div class="pt-3 border-t border-stone-200 flex flex-wrap items-center justify-between gap-4">
+        <div class="space-y-0.5">
+          <p id="plan-description" class="text-sm text-stone-600"></p>
+          <p id="plan-summary-stats" class="text-xs font-bold text-stone-800"></p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-2">
+          <button id="btn-undo" onclick="undoLastChange()" disabled class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-bold text-stone-700 hover:bg-stone-100 disabled:opacity-40 disabled:cursor-not-allowed transition">
+            ↩ Desfazer
+          </button>
+          <button onclick="resetCurrentPlan()" class="px-3 py-2 rounded-lg border border-stone-300 text-xs font-bold text-stone-700 hover:bg-stone-100 transition">
+            Repor Plano
+          </button>
+          <button onclick="downloadCSV()" class="px-3.5 py-2 rounded-lg border border-stone-900 bg-white text-stone-900 hover:bg-stone-100 text-xs font-bold transition">
+            ⬇ Descarregar CSV
+          </button>
+          <button onclick="downloadICS()" class="px-4 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-stone-950 font-black text-xs uppercase tracking-wide shadow-sm transition">
+            📅 Descarregar iCal (.ics)
+          </button>
+        </div>
+      </div>
+
+      <!-- Legenda de Tipos de Treino -->
+      <div class="flex flex-wrap items-center gap-2 pt-1 text-xs">
+        <span class="font-bold text-stone-500 mr-1">Legenda:</span>
+        <span class="px-2 py-0.5 rounded bg-emerald-100 text-emerald-900 font-semibold">Corrida Leve / Base</span>
+        <span class="px-2 py-0.5 rounded bg-blue-100 text-blue-900 font-semibold">Corrida Longa</span>
+        <span class="px-2 py-0.5 rounded bg-amber-100 text-amber-900 font-semibold">Ritmo / Tempo Run</span>
+        <span class="px-2 py-0.5 rounded bg-rose-100 text-rose-900 font-semibold">Séries / Intervalado</span>
+        <span class="px-2 py-0.5 rounded bg-purple-100 text-purple-900 font-semibold">Força / Cruzado</span>
+        <span class="px-2 py-0.5 rounded bg-stone-200 text-stone-700 font-semibold">Descanso</span>
+        <span class="px-2 py-0.5 rounded bg-yellow-300 text-stone-950 font-extrabold">Dia de Prova</span>
+        <span class="ml-auto text-stone-500 italic hidden lg:inline">Dica: clica num dia para editar ou arrasta para trocar dias.</span>
+      </div>
+    </section>
+
+    <!-- Grelha do Calendário -->
+    <section class="bg-white rounded-xl shadow-sm border border-stone-200 overflow-hidden">
+      <div class="overflow-x-auto">
+        <table class="w-full border-collapse min-w-[920px]">
+          <thead>
+            <tr id="calendar-header-row" class="bg-stone-900 text-white text-xs uppercase tracking-wider">
+              <!-- Preenchido via JS -->
+            </tr>
+          </thead>
+          <tbody id="calendar-body" class="divide-y divide-stone-200 text-sm">
+            <!-- Preenchido via JS -->
+          </tbody>
+        </table>
+      </div>
+    </section>
+  </main>
+
+  <!-- VISTA: SOBRE -->
+  <main id="view-about" class="hidden flex-1 max-w-3xl w-full mx-auto px-4 py-8">
+    <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 sm:p-8 space-y-5">
+      <h1 class="text-2xl font-black text-stone-900">Sobre o Calendar Hack PT</h1>
+      <p class="text-stone-700 leading-relaxed">
+        O <strong>Calendar Hack PT</strong> é uma ferramenta simples e gratuita pensada para corredores que preparam provas de estrada ou trail e querem organizar o seu plano diretamente no calendário pessoal (Google Calendar, Apple Calendar, Outlook ou relógio desportivo).
+      </p>
+
+      <h2 class="text-lg font-extrabold text-stone-900 pt-2">Como utilizar</h2>
+      <ol class="list-decimal pl-5 space-y-2 text-stone-700">
+        <li><strong>Escolhe o plano de treino</strong> na lista superior de acordo com a tua prova (5 km, 10 km, Meia Maratona, Maratona ou Trail Curto).</li>
+        <li><strong>Define a data da prova:</strong> todas as semanas são calculadas automaticamente de trás para a frente até ao dia da competição.</li>
+        <li><strong>Personaliza na grelha:</strong> clica em qualquer dia para ajustar a distância, alterar o tipo de treino ou adicionar notas de ritmo. Também podes arrastar um dia para cima de outro para trocar sessões.</li>
+        <li><strong>Exporta o calendário:</strong> descarrega o ficheiro <code>.ics</code> (iCalendar) para importar todos os treinos de uma só vez para a tua agenda, ou exporta em <code>.csv</code> para abrir em folha de cálculo.</li>
+      </ol>
+
+      <h2 class="text-lg font-extrabold text-stone-900 pt-2">Adicionar novos planos ao site</h2>
+      <p class="text-stone-700 leading-relaxed">
+        Os planos disponíveis na lista são carregados a partir da pasta <code>plans/</code> em formato YAML (<code>plans/index.yaml</code> e respetivos ficheiros <code>.yaml</code>). Para disponibilizar novos planos, basta colocar o ficheiro YAML nessa pasta e registá-lo no <code>index.yaml</code>.
+      </p>
+
+      <div class="pt-4 border-t border-stone-200 flex justify-between items-center text-xs text-stone-500">
+        <span>Adaptado para Português Europeu (pt-PT).</span>
+        <button onclick="switchTab('calendar')" class="px-4 py-2 rounded-lg bg-stone-900 text-yellow-400 font-bold">
+          Voltar ao Calendário
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <!-- Modal de Edição de Treino -->
+  <div id="edit-modal" class="hidden fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-xl max-w-md w-full shadow-2xl border border-stone-200 overflow-hidden">
+      <div class="bg-stone-900 text-white px-5 py-3.5 flex items-center justify-between">
+        <div>
+          <h3 class="font-bold text-base">Editar Treino</h3>
+          <p id="modal-date-subtitle" class="text-xs text-yellow-400 font-semibold"></p>
+        </div>
+        <button onclick="closeEditModal()" class="text-stone-400 hover:text-white text-xl font-bold leading-none">&times;</button>
+      </div>
+
+      <form onsubmit="saveDayEdit(event)" class="p-5 space-y-4">
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Tipo de Sessão</label>
+          <select id="edit-type" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm font-semibold">
+            <option value="easy">Corrida Leve / Base</option>
+            <option value="long">Corrida Longa</option>
+            <option value="tempo">Ritmo / Tempo Run</option>
+            <option value="intervals">Séries / Intervalado</option>
+            <option value="cross">Força / Treino Cruzado</option>
+            <option value="rest">Descanso</option>
+            <option value="race">Dia de Prova</option>
+          </select>
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Título do Treino</label>
+          <input type="text" id="edit-title" required class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm font-semibold" />
+        </div>
+
+        <div>
+          <label id="edit-dist-label" class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Distância (km)</label>
+          <input type="number" step="0.1" min="0" id="edit-distance" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm font-semibold" />
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold uppercase tracking-wider text-stone-600 mb-1">Notas / Ritmos / Observações</label>
+          <textarea id="edit-notes" rows="3" class="w-full rounded-lg border border-stone-300 px-3 py-2 text-sm"></textarea>
+        </div>
+
+        <div class="pt-2 flex justify-end gap-2">
+          <button type="button" onclick="closeEditModal()" class="px-4 py-2 rounded-lg border border-stone-300 text-xs font-bold text-stone-700 hover:bg-stone-100">
+            Cancelar
+          </button>
+          <button type="submit" class="px-4 py-2 rounded-lg bg-yellow-400 hover:bg-yellow-300 text-stone-950 font-black text-xs uppercase">
+            Guardar Alteração
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <footer class="bg-stone-950 text-stone-400 text-xs py-4 px-4 mt-10">
+    <div class="max-w-7xl mx-auto flex flex-wrap justify-between items-center gap-2">
+      <span>Calendar Hack PT — Planeador de Treinos de Corrida</span>
+      <span>Compatível com Google Calendar, Apple Calendar e Outlook (.ics)</span>
+    </div>
+  </footer>
+
+  <script>
+    // Planos de reserva embutidos caso index.html seja aberto diretamente via file:// sem servidor HTTP
+    const FALLBACK_YAML_FILES = {
+      "index.yaml": `plans:
+  - id: 5k-6s
+    file: 5k-6s.yaml
+    name: "5 km — 6 Semanas (Iniciante / Ritmo)"
+  - id: 10k-8s
+    file: 10k-8s.yaml
+    name: "10 km — 8 Semanas (Progressão)"
+  - id: meia-maratona-12s
+    file: meia-maratona-12s.yaml
+    name: "Meia Maratona — 12 Semanas"
+  - id: maratona-16s
+    file: maratona-16s.yaml
+    name: "Maratona — 16 Semanas"
+  - id: trail-curto-10s
+    file: trail-curto-10s.yaml
+    name: "Trail Curto (20-25 km) — 10 Semanas"`,
+      "5k-6s.yaml": `id: 5k-6s
+name: "5 km — 6 Semanas (Iniciante / Ritmo)"
+distance_label: "5 km"
+weeks_count: 6
+description: "Plano progressivo de 6 semanas para preparar uma prova rápida de 5 km ou ganhar velocidade base."
+weeks:
+  - week: 1
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "Recuperação ou mobilidade ligeira." }
+      - { type: easy, title: "Corrida Leve", distance_km: 4, notes: "Ritmo confortável de conversa." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: intervals, title: "Séries Curtas", distance_km: 5, notes: "1,5 km aquec. + 6x400m ritmo 5k + 1 km calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Suave", distance_km: 4, notes: "" }
+      - { type: long, title: "Corrida Contínua", distance_km: 6, notes: "" }
+  - week: 2
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "" }
+      - { type: cross, title: "Reforço Muscular", distance_km: 0, notes: "30 min core e estabilidade." }
+      - { type: tempo, title: "Ritmo Controlado", distance_km: 6, notes: "1,5 km aquec. + 3 km vivo + 1,5 km calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 4, notes: "" }
+      - { type: long, title: "Corrida Longa Base", distance_km: 7, notes: "" }
+  - week: 3
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "" }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: intervals, title: "Séries de 800m", distance_km: 6.5, notes: "1,5 km aquec. + 4x800m + 1,5 km calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Regenerativa", distance_km: 4, notes: "" }
+      - { type: long, title: "Corrida Longa", distance_km: 8, notes: "" }
+  - week: 4
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "" }
+      - { type: cross, title: "Mobilidade / Core", distance_km: 0, notes: "" }
+      - { type: intervals, title: "Fartlek 5k", distance_km: 6, notes: "10x (1 min forte / 1 min leve)." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 4, notes: "" }
+      - { type: long, title: "Corrida Aeróbia", distance_km: 7, notes: "" }
+  - week: 5
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Leve", distance_km: 5, notes: "" }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: intervals, title: "Séries Específicas", distance_km: 6, notes: "1,5 km aquec. + 3x1000m ritmo prova + 1,5 km calma." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Corrida Solta", distance_km: 4, notes: "" }
+      - { type: long, title: "Corrida Média", distance_km: 6, notes: "" }
+  - week: 6
+    days:
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: tempo, title: "Ativação", distance_km: 4.5, notes: "2 km leve + 1,5 km ritmo prova + 1 km leve." }
+      - { type: rest, title: "Descanso", distance_km: 0, notes: "" }
+      - { type: easy, title: "Trote Ligeiro", distance_km: 3, notes: "" }
+      - { type: rest, title: "Descanso Total", distance_km: 0, notes: "" }
+      - { type: easy, title: "Shakeout Run", distance_km: 2, notes: "" }
+      - { type: race, title: "PROVA 5 KM", distance_km: 5, notes: "Boa prova!" }`
+    };
+
+    const MI_TO_KM = 1.609344;
+
+    function inferWorkoutType(title, distKm, isLastDayOfPlan) {
+      if (isLastDayOfPlan && distKm >= 20) return "race";
+      const t = String(title || "").toLowerCase();
+      if (!distKm || distKm <= 0) {
+        if (t.includes("cross") || t.includes("strength") || t.includes("força") || t.includes("core") || t.includes("mobilidade")) {
+          return "cross";
+        }
+        return "rest";
+      }
+      if (t.includes("simulation") || t.includes("long") || distKm >= 16) return "long";
+      if (t.includes("x ") || t.includes("interval") || t.includes("série") || t.includes("fartlek") || t.includes("uphill") || t.includes("downhill")) {
+        return "intervals";
+      }
+      if (t.includes("tempo") || t.includes("hmp") || t.includes("hm") || t.includes("mp") || t.includes("pace") || t.includes("ritmo")) {
+        return "tempo";
+      }
+      return "easy";
+    }
+
+    function normalizePlanData(raw) {
+      if (!raw || typeof raw !== "object") return raw;
+
+      // Formato nativo PT (weeks -> days -> distance_km)
+      if (Array.isArray(raw.weeks)) {
+        return {
+          id: raw.id || "plano-custom",
+          name: raw.name || "Plano de Treino",
+          description: raw.description || "",
+          weeks: raw.weeks.map((w, idx) => ({
+            week: w.week || idx + 1,
+            days: Array.isArray(w.days) ? w.days.slice(0, 7).map(d => ({
+              type: d.type || "easy",
+              title: d.title || "Treino",
+              distance_km: Number(d.distance_km) || 0,
+              notes: d.notes || ""
+            })) : []
+          }))
+        };
+      }
+
+      // Formato schedule -> workouts -> distance (com units: mi ou km)
+      if (Array.isArray(raw.schedule)) {
+        const planUnits = (raw.units || "km").toLowerCase().startsWith("mi") ? "mi" : "km";
+        const totalWeeks = raw.schedule.length;
+
+        const weeks = raw.schedule.map((wk, wIdx) => {
+          const rawWorkouts = Array.isArray(wk.workouts) ? wk.workouts : [];
+          const days = [];
+          for (let dIdx = 0; dIdx < 7; dIdx++) {
+            const item = rawWorkouts[dIdx] || { title: "Descanso", distance: 0 };
+            const rawDist = Number(item.distance) || 0;
+            const distKm = rawDist > 0
+              ? (planUnits === "mi" ? Number((rawDist * MI_TO_KM).toFixed(2)) : rawDist)
+              : 0;
+            const rawTitle = String(item.title || "Descanso").trim();
+            const isLastDay = (wIdx === totalWeeks - 1) && (dIdx === 6);
+            const type = item.type || inferWorkoutType(rawTitle, distKm, isLastDay);
+
+            days.push({
+              type,
+              title: rawTitle,
+              distance_km: distKm,
+              notes: item.notes || ""
+            });
+          }
+          return { week: wIdx + 1, days };
+        });
+
+        return {
+          id: raw.id || "plano-schedule",
+          name: raw.name || "Plano de Treino",
+          description: String(raw.description || "").trim(),
+          weeks
+        };
+      }
+
+      return raw;
+    }
+
+    const KM_TO_MI = 0.621371;
+    const TYPE_STYLES = {
+      easy:      { bg: "bg-emerald-50 border-emerald-200", badge: "bg-emerald-100 text-emerald-900", label: "Base" },
+      long:      { bg: "bg-blue-50 border-blue-200",       badge: "bg-blue-100 text-blue-900",       label: "Longa" },
+      tempo:     { bg: "bg-amber-50 border-amber-200",     badge: "bg-amber-100 text-amber-900",     label: "Ritmo" },
+      intervals: { bg: "bg-rose-50 border-rose-200",       badge: "bg-rose-100 text-rose-900",       label: "Séries" },
+      cross:     { bg: "bg-purple-50 border-purple-200",   badge: "bg-purple-100 text-purple-900",   label: "Cruzado" },
+      rest:      { bg: "bg-stone-50 border-stone-200",     badge: "bg-stone-200 text-stone-700",     label: "Descanso" },
+      race:      { bg: "bg-yellow-200 border-yellow-500",  badge: "bg-stone-950 text-yellow-400",    label: "PROVA" }
+    };
+
+    const DAY_NAMES_MON = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
+    const DAY_NAMES_SUN = ["Domingo", "Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado"];
+    const MONTHS_PT = ["jan", "fev", "mar", "abr", "mai", "jun", "jul", "ago", "set", "out", "nov", "dez"];
+
+    let catalog = [];
+    let currentPlanOriginal = null;
+    let currentPlan = null;
+    let undoStack = [];
+    let unit = "km";
+    let weekStart = "mon"; // 'mon' | 'sun'
+    let raceDateStr = "";
+    let editingCoords = null;
+    let dragSource = null;
+
+    async function loadYamlFile(filename) {
+      try {
+        const resp = await fetch(`./plans/${filename}`, { cache: "no-store" });
+        if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
+        const text = await resp.text();
+        return normalizePlanData(jsyaml.load(text));
+      } catch (err) {
+        if (FALLBACK_YAML_FILES[filename]) {
+          return normalizePlanData(jsyaml.load(FALLBACK_YAML_FILES[filename]));
+        }
+        throw err;
+      }
+    }
+
+    function getDefaultRaceDate() {
+      const d = new Date();
+      d.setDate(d.getDate() + 84); // ~12 semanas à frente
+      // Ajustar para o próximo domingo
+      const diffToSunday = (7 - d.getDay()) % 7;
+      d.setDate(d.getDate() + diffToSunday);
+      return d.toISOString().split("T")[0];
+    }
+
+    async function init() {
+      raceDateStr = getDefaultRaceDate();
+      document.getElementById("race-date").value = raceDateStr;
+
+      const indexData = await loadYamlFile("index.yaml");
+      catalog = indexData.plans || [];
+
+      const select = document.getElementById("plan-select");
+      select.innerHTML = "";
+      catalog.forEach(item => {
+        const opt = document.createElement("option");
+        opt.value = item.file;
+        opt.textContent = item.name;
+        select.appendChild(opt);
+      });
+
+      const defaultItem = catalog.find(p => p.id === "meia-maratona-12s") || catalog[0];
+      if (defaultItem) {
+        select.value = defaultItem.file;
+        await onSelectPlan(defaultItem.file);
+      }
+    }
+
+    async function onSelectPlan(filename) {
+      const data = await loadYamlFile(filename);
+      currentPlanOriginal = JSON.parse(JSON.stringify(data));
+      currentPlan = JSON.parse(JSON.stringify(data));
+      undoStack = [];
+      updateUndoButton();
+      renderCalendar();
+    }
+
+    function resetCurrentPlan() {
+      if (!currentPlanOriginal) return;
+      pushUndo();
+      currentPlan = JSON.parse(JSON.stringify(currentPlanOriginal));
+      renderCalendar();
+    }
+
+    function pushUndo() {
+      undoStack.push(JSON.stringify(currentPlan));
+      if (undoStack.length > 30) undoStack.shift();
+      updateUndoButton();
+    }
+
+    function undoLastChange() {
+      if (undoStack.length === 0) return;
+      currentPlan = JSON.parse(undoStack.pop());
+      updateUndoButton();
+      renderCalendar();
+    }
+
+    function updateUndoButton() {
+      document.getElementById("btn-undo").disabled = undoStack.length === 0;
+    }
+
+    function onChangeRaceDate(val) {
+      if (!val) return;
+      raceDateStr = val;
+      renderCalendar();
+    }
+
+    function setUnit(newUnit) {
+      unit = newUnit;
+      document.getElementById("unit-km").className = unit === "km"
+        ? "px-3 py-2 text-xs font-bold bg-stone-900 text-yellow-400"
+        : "px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200";
+      document.getElementById("unit-mi").className = unit === "mi"
+        ? "px-3 py-2 text-xs font-bold bg-stone-900 text-yellow-400"
+        : "px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200";
+      renderCalendar();
+    }
+
+    function setWeekStart(start) {
+      weekStart = start;
+      document.getElementById("start-mon").className = weekStart === "mon"
+        ? "px-3 py-2 text-xs font-bold bg-stone-900 text-yellow-400"
+        : "px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200";
+      document.getElementById("start-sun").className = weekStart === "sun"
+        ? "px-3 py-2 text-xs font-bold bg-stone-900 text-yellow-400"
+        : "px-3 py-2 text-xs font-bold text-stone-700 hover:bg-stone-200";
+      renderCalendar();
+    }
+
+    function formatDist(km) {
+      if (!km || km <= 0) return "";
+      const val = unit === "km" ? km : km * KM_TO_MI;
+      return `${Number(val.toFixed(1)).toLocaleString("pt-PT")} ${unit}`;
+    }
+
+    function parseLocalDate(yyyyMmDd) {
+      const [y, m, d] = yyyyMmDd.split("-").map(Number);
+      return new Date(y, m - 1, d);
+    }
+
+    function addDays(date, days) {
+      const copy = new Date(date);
+      copy.setDate(copy.getDate() + days);
+      return copy;
+    }
+
+    function formatShortDate(date) {
+      return `${date.getDate()} ${MONTHS_PT[date.getMonth()]}`;
+    }
+
+    function formatISODate(date) {
+      const y = date.getFullYear();
+      const m = String(date.getMonth() + 1).padStart(2, "0");
+      const d = String(date.getDate()).padStart(2, "0");
+      return `${y}-${m}-${d}`;
+    }
+
+    function buildDatedGrid() {
+      // Cada semana no YAML assume índice 0=Seg ... 6=Dom.
+      // Calculamos as datas de trás para a frente a partir da Data da Prova.
+      const raceDate = parseLocalDate(raceDateStr);
+      const totalWeeks = currentPlan.weeks.length;
+      const totalDays = totalWeeks * 7;
+      const startDate = addDays(raceDate, -(totalDays - 1));
+
+      // Construir sequência linear de dias com datas reais
+      const flatDays = [];
+      let idx = 0;
+      for (let w = 0; w < totalWeeks; w++) {
+        for (let d = 0; d < 7; d++) {
+          const dateObj = addDays(startDate, idx);
+          flatDays.push({
+            weekIdx: w,
+            dayIdx: d,
+            date: dateObj,
+            workout: currentPlan.weeks[w].days[d]
+          });
+          idx++;
+        }
+      }
+
+      // Agrupar em linhas de 7 dias respeitando o início da semana escolhido
+      // Se weekStart === 'mon', alinhar pela segunda-feira; se 'sun', alinhar pelo domingo
+      const targetStartDow = weekStart === "mon" ? 1 : 0; // JS getDay(): 0=Dom, 1=Seg
+      const firstDate = flatDays[0].date;
+      const diffBack = (firstDate.getDay() - targetStartDow + 7) % 7;
+      const gridStart = addDays(firstDate, -diffBack);
+
+      const lastDate = flatDays[flatDays.length - 1].date;
+      const diffForward = (targetStartDow + 6 - lastDate.getDay() + 7) % 7;
+      const gridEnd = addDays(lastDate, diffForward);
+
+      const dayLookup = new Map();
+      flatDays.forEach(item => dayLookup.set(formatISODate(item.date), item));
+
+      const rows = [];
+      let cursor = new Date(gridStart);
+      let weekNumber = 1;
+      while (cursor <= gridEnd) {
+        const rowCells = [];
+        for (let i = 0; i < 7; i++) {
+          const iso = formatISODate(cursor);
+          rowCells.push({
+            date: new Date(cursor),
+            entry: dayLookup.get(iso) || null
+          });
+          cursor = addDays(cursor, 1);
+        }
+        rows.push({ weekNumber, cells: rowCells });
+        weekNumber++;
+      }
+      return rows;
+    }
+
+    function renderCalendar() {
+      if (!currentPlan) return;
+
+      document.getElementById("plan-description").textContent = currentPlan.description || "";
+
+      // Cabeçalho dos dias da semana
+      const headerRow = document.getElementById("calendar-header-row");
+      const dayLabels = weekStart === "mon" ? DAY_NAMES_MON : DAY_NAMES_SUN;
+      headerRow.innerHTML = `<th class="py-3 px-3 text-left w-20 bg-stone-950">Semana</th>` +
+        dayLabels.map(d => `<th class="py-3 px-2.5 text-left border-l border-stone-800">${d}</th>`).join("") +
+        `<th class="py-3 px-3 text-right w-28 bg-stone-950 border-l border-stone-800">Total</th>`;
+
+      const rows = buildDatedGrid();
+      const tbody = document.getElementById("calendar-body");
+      tbody.innerHTML = "";
+
+      let grandTotalKm = 0;
+      let totalRunSessions = 0;
+
+      rows.forEach(row => {
+        let weekKm = 0;
+        const tr = document.createElement("tr");
+        tr.className = "hover:bg-stone-50/70";
+
+        let cellsHtml = `<td class="p-3 font-black text-stone-500 bg-stone-50 border-r border-stone-200 align-top">
+          <div class="text-xs uppercase">Sem.</div>
+          <div class="text-lg text-stone-900">${row.weekNumber}</div>
+        </td>`;
+
+        row.cells.forEach(cell => {
+          const dateLabel = formatShortDate(cell.date);
+          if (!cell.entry) {
+            cellsHtml += `<td class="p-2 border-r border-stone-200 bg-stone-100/60 align-top min-h-[104px]">
+              <div class="text-[11px] font-semibold text-stone-400">${dateLabel}</div>
+            </td>`;
+            return;
+          }
+
+          const { weekIdx, dayIdx, workout } = cell.entry;
+          const distKm = Number(workout.distance_km) || 0;
+          weekKm += distKm;
+          grandTotalKm += distKm;
+          if (distKm > 0 && workout.type !== "rest" && workout.type !== "cross") totalRunSessions++;
+
+          const style = TYPE_STYLES[workout.type] || TYPE_STYLES.easy;
+          const distText = formatDist(distKm);
+
+          cellsHtml += `
+            <td class="p-1.5 border-r border-stone-200 align-top transition"
+                ondragover="handleDragOver(event)"
+                ondragleave="handleDragLeave(event)"
+                ondrop="handleDrop(event, ${weekIdx}, ${dayIdx})">
+              <div draggable="true"
+                   ondragstart="handleDragStart(event, ${weekIdx}, ${dayIdx})"
+                   onclick="openEditModal(${weekIdx}, ${dayIdx})"
+                   class="h-full min-h-[104px] rounded-lg border ${style.bg} p-2.5 flex flex-col justify-between cursor-pointer hover:shadow-md transition">
+                <div>
+                  <div class="flex items-center justify-between gap-1 mb-1">
+                    <span class="text-[11px] font-bold text-stone-600">${dateLabel}</span>
+                    <span class="text-[10px] font-extrabold uppercase px-1.5 py-0.5 rounded ${style.badge}">${style.label}</span>
+                  </div>
+                  <div class="font-bold text-stone-900 text-xs leading-snug">${escapeHtml(workout.title)}</div>
+                  ${workout.notes ? `<p class="text-[11px] text-stone-600 mt-1 line-clamp-2 leading-tight">${escapeHtml(workout.notes)}</p>` : ""}
+                </div>
+                ${distText ? `<div class="mt-2 pt-1 border-t border-black/10 text-xs font-black text-stone-900">${distText}</div>` : ""}
+              </div>
+            </td>
+          `;
+        });
+
+        cellsHtml += `<td class="p-3 text-right align-middle bg-stone-50 font-black text-stone-900">
+          <div class="text-sm">${formatDist(weekKm) || "0 " + unit}</div>
+          <div class="text-[10px] font-semibold text-stone-500 uppercase">Volume</div>
+        </td>`;
+
+        tr.innerHTML = cellsHtml;
+        tbody.appendChild(tr);
+      });
+
+      document.getElementById("plan-summary-stats").textContent =
+        `${rows.length} semanas • ${totalRunSessions} sessões de corrida • Volume total: ${formatDist(grandTotalKm)}`;
+    }
+
+    // Drag & Drop entre dias
+    function handleDragStart(e, weekIdx, dayIdx) {
+      dragSource = { weekIdx, dayIdx };
+      e.dataTransfer.effectAllowed = "move";
+    }
+
+    function handleDragOver(e) {
+      e.preventDefault();
+      e.currentTarget.classList.add("drag-over");
+    }
+
+    function handleDragLeave(e) {
+      e.currentTarget.classList.remove("drag-over");
+    }
+
+    function handleDrop(e, targetWeekIdx, targetDayIdx) {
+      e.preventDefault();
+      e.currentTarget.classList.remove("drag-over");
+      if (!dragSource) return;
+      if (dragSource.weekIdx === targetWeekIdx && dragSource.dayIdx === targetDayIdx) return;
+
+      pushUndo();
+      const srcWorkout = currentPlan.weeks[dragSource.weekIdx].days[dragSource.dayIdx];
+      const dstWorkout = currentPlan.weeks[targetWeekIdx].days[targetDayIdx];
+      currentPlan.weeks[dragSource.weekIdx].days[dragSource.dayIdx] = dstWorkout;
+      currentPlan.weeks[targetWeekIdx].days[targetDayIdx] = srcWorkout;
+      dragSource = null;
+      renderCalendar();
+    }
+
+    // Modal de Edição
+    function openEditModal(weekIdx, dayIdx) {
+      editingCoords = { weekIdx, dayIdx };
+      const w = currentPlan.weeks[weekIdx].days[dayIdx];
+      document.getElementById("modal-date-subtitle").textContent = `Semana ${weekIdx + 1}`;
+      document.getElementById("edit-type").value = w.type || "easy";
+      document.getElementById("edit-title").value = w.title || "";
+      const displayDist = unit === "km" ? (w.distance_km || 0) : Number(((w.distance_km || 0) * KM_TO_MI).toFixed(2));
+      document.getElementById("edit-dist-label").textContent = `Distância (${unit})`;
+      document.getElementById("edit-distance").value = displayDist;
+      document.getElementById("edit-notes").value = w.notes || "";
+      document.getElementById("edit-modal").classList.remove("hidden");
+    }
+
+    function closeEditModal() {
+      document.getElementById("edit-modal").classList.add("hidden");
+      editingCoords = null;
+    }
+
+    function saveDayEdit(e) {
+      e.preventDefault();
+      if (!editingCoords) return;
+      pushUndo();
+      const { weekIdx, dayIdx } = editingCoords;
+      const rawDist = parseFloat(document.getElementById("edit-distance").value) || 0;
+      const distKm = unit === "km" ? rawDist : Number((rawDist / KM_TO_MI).toFixed(2));
+
+      currentPlan.weeks[weekIdx].days[dayIdx] = {
+        type: document.getElementById("edit-type").value,
+        title: document.getElementById("edit-title").value.trim(),
+        distance_km: distKm,
+        notes: document.getElementById("edit-notes").value.trim()
+      };
+      closeEditModal();
+      renderCalendar();
+    }
+
+    // Exportação iCal (.ics)
+    function downloadICS() {
+      if (!currentPlan) return;
+      const rows = buildDatedGrid();
+      const nowStamp = new Date().toISOString().replace(/[-:]/g, "").split(".")[0] + "Z";
+
+      const lines = [
+        "BEGIN:VCALENDAR",
+        "VERSION:2.0",
+        "PRODID:-//Calendar Hack PT//Planos de Corrida//PT",
+        "CALSCALE:GREGORIAN",
+        "METHOD:PUBLISH"
+      ];
+
+      rows.forEach(row => {
+        row.cells.forEach(cell => {
+          if (!cell.entry) return;
+          const w = cell.entry.workout;
+          if (w.type === "rest" && !w.notes) return; // Opcional: incluir descanso só se tiver nota
+
+          const dtStart = formatISODate(cell.date).replace(/-/g, "");
+          const nextDay = addDays(cell.date, 1);
+          const dtEnd = formatISODate(nextDay).replace(/-/g, "");
+          const distStr = formatDist(w.distance_km);
+          const summary = distStr ? `${w.title} (${distStr})` : w.title;
+          const desc = [
+            `Plano: ${currentPlan.name}`,
+            `Semana ${row.weekNumber}`,
+            w.notes ? `Notas: ${w.notes}` : ""
+          ].filter(Boolean).join("\\n");
+
+          lines.push(
+            "BEGIN:VEVENT",
+            `UID:calhackpt-${currentPlan.id}-${dtStart}@avidaacorrer.pt`,
+            `DTSTAMP:${nowStamp}`,
+            `DTSTART;VALUE=DATE:${dtStart}`,
+            `DTEND;VALUE=DATE:${dtEnd}`,
+            `SUMMARY:${escapeICS(summary)}`,
+            `DESCRIPTION:${escapeICS(desc)}`,
+            "END:VEVENT"
+          );
+        });
+      });
+
+      lines.push("END:VCALENDAR");
+      triggerDownload(lines.join("\r\n"), `${currentPlan.id}-${raceDateStr}.ics`, "text/calendar;charset=utf-8");
+    }
+
+    // Exportação CSV
+    function downloadCSV() {
+      if (!currentPlan) return;
+      const rows = buildDatedGrid();
+      const dayNames = ["Domingo", "Segunda-feira", "Terça-feira", "Quarta-feira", "Quinta-feira", "Sexta-feira", "Sábado"];
+      const csvRows = [["Semana", "Data", "Dia da Semana", "Tipo", "Treino", `Distancia (${unit})`, "Notas"]];
+
+      rows.forEach(row => {
+        row.cells.forEach(cell => {
+          if (!cell.entry) return;
+          const w = cell.entry.workout;
+          const distVal = w.distance_km ? (unit === "km" ? w.distance_km : (w.distance_km * KM_TO_MI).toFixed(1)) : "0";
+          csvRows.push([
+            row.weekNumber,
+            formatISODate(cell.date),
+            dayNames[cell.date.getDay()],
+            (TYPE_STYLES[w.type]?.label || w.type),
+            w.title,
+            distVal,
+            w.notes || ""
+          ]);
+        });
+      });
+
+      const content = "\uFEFF" + csvRows.map(r => r.map(v => `"${String(v).replace(/"/g, '""')}"`).join(";")).join("\r\n");
+      triggerDownload(content, `${currentPlan.id}-${raceDateStr}.csv`, "text/csv;charset=utf-8");
+    }
+
+    function triggerDownload(content, filename, mimeType) {
+      const blob = new Blob([content], { type: mimeType });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function switchTab(tab) {
+      const isCal = tab === "calendar";
+      document.getElementById("view-calendar").classList.toggle("hidden", !isCal);
+      document.getElementById("view-about").classList.toggle("hidden", isCal);
+      document.getElementById("nav-calendar").className = isCal
+        ? "px-3.5 py-1.5 rounded text-sm font-bold bg-yellow-400 text-stone-950 transition"
+        : "px-3.5 py-1.5 rounded text-sm font-semibold text-stone-300 hover:text-white hover:bg-stone-800 transition";
+      document.getElementById("nav-about").className = !isCal
+        ? "px-3.5 py-1.5 rounded text-sm font-bold bg-yellow-400 text-stone-950 transition"
+        : "px-3.5 py-1.5 rounded text-sm font-semibold text-stone-300 hover:text-white hover:bg-stone-800 transition";
+    }
+
+    function escapeHtml(str) {
+      return String(str || "")
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;");
+    }
+
+    function escapeICS(str) {
+      return String(str || "")
+        .replace(/\\/g, "\\\\")
+        .replace(/;/g, "\\;")
+        .replace(/,/g, "\\,")
+        .replace(/\n/g, "\\n");
+    }
+
+    init();
+  </script>
+</body>
+</html>

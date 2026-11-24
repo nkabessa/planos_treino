@@ -1,0 +1,259 @@
+id: boston_level_two_pt
+source: https://www.baa.org//races/boston-marathon/enter/training/leveltwo
+name: Plano de Treino de Maratona Boston Nível Dois
+description:
+  "O Nível Dois (iniciante a intermédio) foi concebido para uma média de cinco dias
+  de corrida por semana. O plano segue uma progressão de volume que começa nos 48 km
+  semanais e chega aos 72 km nas semanas de pico. Os treinos longos chegam aos 29-32 km.
+  Abreviaturas: RM = ritmo de maratona, RMM = ritmo de meia maratona, R10K = ritmo de 10 km."
+units: km
+type: Marathon
+schedule:
+  - workouts: # Semana 1
+      - title: 8-10 km Corrida Fácil
+        distance: 9.7
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: 11 km Corrida Aeróbica
+        distance: 11.3
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: 10-11 km Corrida Fácil
+        distance: 11.3
+      - title: Dia de Descanso
+      - title: 14,5-17,5 km Corrida Fácil
+        distance: 17.7
+  - workouts: # Semana 2
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: 10-11 km Corrida Aeróbica
+        distance: 11.3
+      - title: Dia de Descanso
+      - title: 11 km Corrida Aeróbica
+        distance: 11.3
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: 10-11 km Corrida Fácil
+        distance: 11.3
+      - title: 17,5-19,5 km Corrida Aeróbica
+        distance: 19.3
+  - workouts: # Semana 3
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "11 km, compostos por:\n3-5 km de aquecimento\n6 x (200 m em subida a R10K, 30 segundos de pausa, 200 m em descida a RM)\n90 segundos de pausa entre séries\n3 km de retorno à calma"
+        distance: 11.3
+      - title: 6,5-10 km Corrida Fácil
+        distance: 9.7
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13 km, compostos por:\n3 km de aquecimento\n2 x 3,2 km a RMM com 3 minutos de trote leve entre repetições\n3 km de retorno à calma"
+        distance: 12.9
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "18-21 km, compostos por:\n11 km fáceis\n10 x (1 minuto a R10K / 1 minuto a RM)\n1,5-3 km fáceis"
+        distance: 20.9
+  - workouts: # Semana 4
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13 km, compostos por:\n3 km de aquecimento\n4 x 1 km a R10K com 2 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: Treino Cruzado ou Treino de Força
+      - title: 10-11 km Corrida Aeróbica
+        distance: 11.3
+      - title: Dia de Descanso
+      - title: "21 km, compostos por:\n3 km de aquecimento\n4 x 3,2 km a RM com 2-3 minutos de pausa\n3 km de retorno à calma"
+        distance: 20.9
+      - title: 10-13 km Corrida Fácil
+        distance: 12.9
+  - workouts: # Semana 5
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "11-13 km, compostos por:\n3-5 km de aquecimento\n6 x (300 m em subida a R10K, 30 segundos de pausa, 300 m em descida a RM)\n90 segundos de pausa entre séries\n3-5 km de retorno à calma"
+        distance: 12.9
+      - title: 8-11 km Corrida Fácil
+        distance: 11.3
+      - title: Treino Cruzado ou Treino de Força
+      - title: "13 km, compostos por:\n3 km de aquecimento\n4 x 1,6 km a RMM com 2 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: Dia de Descanso
+      - title: 19,5-22,5 km Corrida Aeróbica
+        distance: 22.5
+  - workouts: # Semana 6
+      - title: Dia de Descanso
+      - title: "11-13 km, compostos por:\n3-5 km de aquecimento\n5 x 1 km a R10K com 2 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 6,5-8 km Corrida Fácil
+        distance: 8.0
+      - title: Treino Cruzado ou Treino de Força
+      - title: "11 km, compostos por:\n3 km de aquecimento\n2 x 2,4 km a RMM com 3 minutos de trote\n3 km de retorno à calma"
+        distance: 11.3
+      - title: 5-6,5 km Corrida Fácil
+        distance: 6.4
+      - title: "19-24 km Simulação de Maratona (em percurso ondulado), compostos por:\n8-9,5 km fáceis\n9,5-11 km a RM\n1,5-3 km fáceis"
+        distance: 24.1
+  - workouts: # Semana 7
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "11-13 km, compostos por:\n3-5 km de aquecimento\n6 x (300 m em subida a R10K, 45 segundos de pausa, 300 m em descida a RM)\n90 segundos de pausa entre séries\n3-5 km de retorno à calma"
+        distance: 12.9
+      - title: Treino Cruzado ou Treino de Força
+      - title: 10-13 km Corrida Aeróbica
+        distance: 12.9
+      - title: Dia de Descanso
+      - title: "21 km, compostos por:\n3 km de aquecimento\n3 x 4,8 km a RM com 2-3 minutos de pausa\n3 km de retorno à calma"
+        distance: 20.9
+      - title: 13-16 km Corrida Fácil
+        distance: 16.1
+  - workouts: # Semana 8
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "11-13 km, compostos por:\n3-5 km de aquecimento\n4 x 1200 m a R10K com 2 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 8-11 km Corrida Fácil
+        distance: 11.3
+      - title: Dia de Descanso
+      - title: "13 km, compostos por:\n3 km de aquecimento\n6,5 km a RMM\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 6,5-10 km Corrida Fácil
+        distance: 9.7
+      - title: "21-24 km, compostos por:\n11 km fáceis\n8 x (2 minutos a R10K com 2 minutos fáceis)\n1,5-3 km fáceis"
+        distance: 24.1
+  - workouts: # Semana 9
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "11-13 km, compostos por:\n3-5 km de aquecimento\n6 x (400 m em subida a R10K, 45 segundos de pausa, 400 m em descida a RM)\n90 segundos de pausa entre séries\n3-5 km de retorno à calma"
+        distance: 12.9
+      - title: 10-13 km Corrida Fácil
+        distance: 12.9
+      - title: Treino Cruzado ou Treino de Força
+      - title: "16 km, compostos por:\n3 km de aquecimento\n3 x 3,2 km a RMM com 3 minutos de trote\n3 km de retorno à calma"
+        distance: 16.1
+      - title: Dia de Descanso
+      - title: 19,5-22,5 km Corrida Aeróbica
+        distance: 22.5
+  - workouts: # Semana 10
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13-14,5 km, compostos por:\n3 km de aquecimento\n5 x 1200 m a R10K com 2:30 de pausa\n3 km de retorno à calma"
+        distance: 14.5
+      - title: 6,5-8 km Corrida Fácil
+        distance: 8.0
+      - title: 8-11 km Corrida Aeróbica
+        distance: 11.3
+      - title: Dia de Descanso
+      - title: "24-25,5 km, compostos por:\n3-5 km de aquecimento\n3 x (4,8 km a RM com 1,6 km de recuperação fácil)\n3 km de retorno à calma"
+        distance: 25.7
+      - title: 6,5-8 km Corrida Fácil
+        distance: 8.0
+  - workouts: # Semana 11
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13-16 km, compostos por:\n3-5 km de aquecimento\n8 x (400 m em subida a R10K, 45 segundos de pausa, 400 m em descida a RM)\n90 segundos de pausa entre séries\n3-5 km de retorno à calma"
+        distance: 16.1
+      - title: 10-13 km Corrida Fácil
+        distance: 12.9
+      - title: Treino Cruzado ou Treino de Força
+      - title: "14,5 km, compostos por:\n3 km de aquecimento\n4,8 km a RMM, 3 minutos de trote\n3,2 km a RMM\n3 km de retorno à calma"
+        distance: 14.5
+      - title: Dia de Descanso
+      - title: "22,5-25,5 km Simulação de Maratona (em percurso ondulado), compostos por:\n10-13 km fáceis\n9,5 km a RM\n3 km fáceis"
+        distance: 25.7
+  - workouts: # Semana 12
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13 km, compostos por:\n3 km de aquecimento\n4 x 1,6 km a R10K com 3 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 6,5-8 km Corrida Fácil
+        distance: 8.0
+      - title: Dia de Descanso
+      - title: "16 km, compostos por:\n3 km de aquecimento\n2 x 4,8 km a RMM com 3 minutos de trote\n3 km de retorno à calma"
+        distance: 16.1
+      - title: 6,5-8 km Corrida Fácil
+        distance: 8.0
+      - title: "21-26 km, compostos por:\n11 km fáceis\n6 x (3 minutos a RMM com 2 minutos de recuperação fácil)\n1,5-3 km fáceis"
+        distance: 25.7
+  - workouts: # Semana 13
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "11-13 km, compostos por:\n3-5 km de aquecimento\n8 x (400 m em subida a R10K, 45 segundos de pausa, 400 m em descida a RM)\n90 segundos de pausa entre séries\n3-5 km de retorno à calma"
+        distance: 12.9
+      - title: Treino Cruzado ou Treino de Força
+      - title: 10-13 km Corrida Aeróbica
+        distance: 12.9
+      - title: 8 km Corrida Aeróbica
+        distance: 8.0
+      - title: "22,5 km, compostos por:\n3 km de aquecimento\n16 km a RM (começar um pouco mais devagar e acabar mais depressa)\n3 km de retorno à calma"
+        distance: 22.5
+      - title: 11 km Corrida Fácil
+        distance: 11.3
+  - workouts: # Semana 14
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13 km, compostos por:\n3 km de aquecimento\n4 x 1,6 km a R10K com 3 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 5-6,5 km Corrida Fácil
+        distance: 6.4
+      - title: Dia de Descanso
+      - title: "11 km, compostos por:\n3 km de aquecimento\n2 x 3,2 km a RMM com 2 minutos de pausa\n1,6 km de retorno à calma"
+        distance: 11.3
+      - title: 5-6,5 km Corrida Fácil
+        distance: 6.4
+      - title: "26-31 km Simulação de Maratona (em percurso ondulado), compostos por:\n13-14,5 km fáceis\n9,5-13 km a RM\n3 km fáceis"
+        distance: 30.6
+  - workouts: # Semana 15
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13-16 km, compostos por:\n3-5 km de aquecimento\n2 x (800 m em subida a RMM, 60 segundos de pausa, 800 m em descida a RM)\n2 minutos de pausa entre séries\n4 x (400 m em subida a R10K, 45 segundos de pausa, 400 m em descida a RM)\n90 segundos de pausa entre séries\n3-5 km de retorno à calma"
+        distance: 16.1
+      - title: Treino Cruzado ou Treino de Força
+      - title: 10-13 km Corrida Aeróbica
+        distance: 12.9
+      - title: Dia de Descanso
+      - title: "22,5 km, compostos por:\n3 km de aquecimento\n2 x 8 km a RM com 5 minutos de trote entre repetições\n3 km de retorno à calma"
+        distance: 22.5
+      - title: 13-16 km Corrida Fácil
+        distance: 16.1
+  - workouts: # Semana 16
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13 km, compostos por:\n3 km de aquecimento\n2 x (2 km a RMM, 1 km a R10K), tudo com 2 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 6,5-8 km Corrida Fácil
+        distance: 8.0
+      - title: Dia de Descanso
+      - title: "16 km, compostos por:\n3 km de aquecimento\n9,5 km progressivos a RM (começar um pouco mais devagar e aumentar o ritmo a cada 3 km)\n3 km de retorno à calma"
+        distance: 16.1
+      - title: 6,5-8 km Corrida Fácil
+        distance: 8.0
+      - title: 17,5-21 km Corrida Fácil
+        distance: 20.9
+  - workouts: # Semana 17
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13-16 km, compostos por:\n3-5 km de aquecimento\n4 x (800 m em subida a RMM, 60 segundos de pausa, 800 m em descida a RM)\n2 minutos de pausa entre séries\n3-5 km de retorno à calma"
+        distance: 16.1
+      - title: 10-13 km Corrida Fácil
+        distance: 12.9
+      - title: Treino Cruzado ou Treino de Força
+      - title: "14,5 km, compostos por:\n3 km de aquecimento\n6,5-8 km de tempo a RMM\n1,5-3 km de retorno à calma"
+        distance: 14.5
+      - title: Dia de Descanso
+      - title: "29-32 km Simulação de Maratona (em percurso ondulado), compostos por:\n13-14,5 km fáceis\n13-14,5 km a RM\n3 km fáceis"
+        distance: 32.2
+  - workouts: # Semana 18
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "13 km, compostos por:\n3 km de aquecimento\n2 x (2 km a RMM, 1 km a R10K), tudo com 2 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 10-13 km Corrida Fácil
+        distance: 12.9
+      - title: Treino Cruzado ou Treino de Força
+      - title: 10-13 km Corrida Aeróbica
+        distance: 12.9
+      - title: "22,5-24 km, compostos por:\n3 km de aquecimento\n16-17,5 km de tempo a RM\n3 km de retorno à calma"
+        distance: 24.1
+      - title: Dia de Descanso
+  - workouts: # Semana 19
+      - title: Dia de Descanso
+      - title: "11-13 km, compostos por:\n3 km de aquecimento\n5 x 1 km a R10K com 2 minutos de pausa\n3 km de retorno à calma"
+        distance: 12.9
+      - title: 6,5-10 km Corrida Fácil
+        distance: 9.7
+      - title: Dia de Descanso ou Treino Cruzado ou Treino de Força
+      - title: "16 km, compostos por:\n3 km de aquecimento\n2 x (3,2 km a RMM / 1,6 km fáceis)\n3 km de retorno à calma"
+        distance: 16.1
+      - title: Dia de Descanso
+      - title: 11-13 km Corrida Fácil
+        distance: 12.9
+  - workouts: # Semana 20
+      - title: Dia de Descanso
+      - title: "10-11 km, compostos por:\n3 km de aquecimento\n3 x 1 km a RMM com 2 minutos de pausa\n1 x 1 km a R10K\n3 km de retorno à calma"
+        distance: 11.3
+      - title: 3-6,5 km Corrida Fácil
+        distance: 6.4
+      - title: Dia de Descanso
+      - title: "8 km, compostos por:\n3 km de aquecimento\n3,2 km a RM\n1,6 km de retorno à calma"
+        distance: 8.0
+      - title: 3-5 km Corrida Fácil
+        distance: 4.8
+      - title: Maratona de Boston (42,2 km)
+        distance: 42.2
